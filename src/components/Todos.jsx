@@ -51,7 +51,18 @@ function Todos() {
                 {todos.length > 0 && (
                     <>
                         <main className="relative border-t border-[#e6e6e6]">
-                            <input id="toggle-all" type="checkbox" className="peer sr-only" />
+                            <input id="toggle-all" type="checkbox" className="peer sr-only" 
+                                checked={todos.length > 0 && itemsLeft === 0}
+                                onChange={() => {
+                                    const shouldComplete = itemsLeft > 0
+                                    setTodos(
+                                        todos.map((todo) => ({
+                                            ...todo,
+                                            completed: shouldComplete,
+                                        }))
+                                    )
+                                }}
+                            />
                             <label
                                 htmlFor="toggle-all"
                                 className="absolute -top-16.5 left-0 flex h-16.25 w-15 cursor-pointer items-center justify-center text-[22px] text-[#949494] peer-checked:text-[#484848]"
