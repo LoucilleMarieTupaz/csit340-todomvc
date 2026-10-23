@@ -2,10 +2,7 @@ import { useState } from 'react'
 
 function Todos() {
     const [text, setText] = useState('')
-    const [todos, setTodos] = useState([
-        { id: 1, text: 'Learn the spread operator', completed: false },
-        { id: 2, text: 'Set up Tailwind', completed: true },
-    ])
+    const [todos, setTodos] = useState([])
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -46,83 +43,87 @@ function Todos() {
                     />
                 </form>
 
-                <main className="relative border-t border-[#e6e6e6]">
-                    <input id="toggle-all" type="checkbox" className="peer sr-only" />
-                    <label
-                        htmlFor="toggle-all"
-                        className="absolute -top-16.5 left-0 flex h-16.25 w-15 cursor-pointer items-center justify-center text-[22px] text-[#949494] peer-checked:text-[#484848]"
-                    >
-                        <span className="rotate-90">❯</span>
-                    </label>
-
-                    <ul>
-                        {todos.map((todo) => (
-                            <li
-                                key={todo.id}
-                                className="group relative flex items-center border-b border-[#ededed] text-2xl"
+                {todos.length > 0 && (
+                    <>
+                        <main className="relative border-t border-[#e6e6e6]">
+                            <input id="toggle-all" type="checkbox" className="peer sr-only" />
+                            <label
+                                htmlFor="toggle-all"
+                                className="absolute -top-16.5 left-0 flex h-16.25 w-15 cursor-pointer items-center justify-center text-[22px] text-[#949494] peer-checked:text-[#484848]"
                             >
-                            <input
-                                type="checkbox"
-                                checked={todo.completed}
-                                onChange={() => handleToggle(todo.id)}
-                                className="ml-3.75 size-7.5 shrink-0 cursor-pointer accent-[#59a193]"
-                            />
-                            <span
-                                className={
-                                    todo.completed
-                                        ? 'flex-1 py-3.75 pr-15 pl-3.75 break-all text-[#949494] line-through'
-                                        : 'flex-1 py-3.75 pr-15 pl-3.75 break-all'
-                                }
-                            >
-                                {todo.text}
+                                <span className="rotate-90">❯</span>
+                            </label>
 
+                            <ul>
+                                {todos.map((todo) => (
+                                    <li
+                                        key={todo.id}
+                                        className="group relative flex items-center border-b border-[#ededed] text-2xl"
+                                    >
+                                    <input
+                                        type="checkbox"
+                                        checked={todo.completed}
+                                        onChange={() => handleToggle(todo.id)}
+                                        className="ml-3.75 size-7.5 shrink-0 cursor-pointer accent-[#59a193]"
+                                    />
+                                    <span
+                                        className={
+                                            todo.completed
+                                                ? 'flex-1 py-3.75 pr-15 pl-3.75 break-all text-[#949494] line-through'
+                                                : 'flex-1 py-3.75 pr-15 pl-3.75 break-all'
+                                        }
+                                    >
+                                        {todo.text}
+
+                                    </span>
+                                    <button
+                                        type="button"
+                                        onClick={() => handleDelete(todo.id)}
+                                        className="absolute right-2.5 hidden size-10 cursor-pointer text-[30px] text-[#949494] group-hover:block hover:text-[#c18585]"
+                                    >
+                                        ×
+                                    </button>
+                                </li>
+                                ))}
+                            </ul>
+                        </main>
+
+                        <footer className="grid h-10 grid-cols-3 items-center border-t border-[#e6e6e6] px-3.75 text-[15px]">
+                            <span>
+                                <strong className="font-light">1</strong> item left
                             </span>
-                            <button
-                                type="button"
-                                onClick={() => handleDelete(todo.id)}
-                                className="absolute right-2.5 hidden size-10 cursor-pointer text-[30px] text-[#949494] group-hover:block hover:text-[#c18585]"
-                            >
-                                ×
+                            <ul className="flex justify-center gap-1">
+                                <li>
+                                    <button
+                                        type="button"
+                                        className="cursor-pointer rounded-[3px] border border-[#b83f45]/20 px-1.75 py-0.75"
+                                    >
+                                        All
+                                    </button>
+                                </li>
+                                <li>
+                                    <button
+                                        type="button"
+                                        className="cursor-pointer rounded-[3px] border border-transparent px-1.75 py-0.75 hover:border-[#b83f45]/10"
+                                    >
+                                        Active
+                                    </button>
+                                </li>
+                                <li>
+                                    <button
+                                        type="button"
+                                        className="cursor-pointer rounded-[3px] border border-transparent px-1.75 py-0.75 hover:border-[#b83f45]/10"
+                                    >
+                                        Completed
+                                    </button>
+                                </li>
+                            </ul>
+                            <button type="button" className="cursor-pointer justify-self-end hover:underline">
+                                Clear completed
                             </button>
-                        </li>
-                        ))}
-                    </ul>
-                </main>
-
-                <footer className="grid h-10 grid-cols-3 items-center border-t border-[#e6e6e6] px-3.75 text-[15px]">
-                    <span>
-                        <strong className="font-light">1</strong> item left
-                    </span>
-                    <ul className="flex justify-center gap-1">
-                        <li>
-                            <button
-                                type="button"
-                                className="cursor-pointer rounded-[3px] border border-[#b83f45]/20 px-1.75 py-0.75"
-                            >
-                                All
-                            </button>
-                        </li>
-                        <li>
-                            <button
-                                type="button"
-                                className="cursor-pointer rounded-[3px] border border-transparent px-1.75 py-0.75 hover:border-[#b83f45]/10"
-                            >
-                                Active
-                            </button>
-                        </li>
-                        <li>
-                            <button
-                                type="button"
-                                className="cursor-pointer rounded-[3px] border border-transparent px-1.75 py-0.75 hover:border-[#b83f45]/10"
-                            >
-                                Completed
-                            </button>
-                        </li>
-                    </ul>
-                    <button type="button" className="cursor-pointer justify-self-end hover:underline">
-                        Clear completed
-                    </button>
-                </footer>
+                        </footer>
+                    </>
+                )}
             </div>
         </section>
     )
